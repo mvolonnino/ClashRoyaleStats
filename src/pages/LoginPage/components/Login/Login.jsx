@@ -1,18 +1,42 @@
 import React, { useState } from "react";
-import { MDBAnimation } from "mdbreact";
 
-import "./Login.css";
+import { useDataLayerValue } from "../../../../context/DataLayer";
+import { auth, gProvider } from "../../../../firebase/firebase";
+import { MDBAnimation } from "mdbreact";
 import clashLogin from "../../../../assets/clash-login-2.svg";
 import miniPekka from "../../../../assets/mini_pekka.png";
 import archer from "../../../../assets/archers.png";
 
+import "./Login.css";
+
 function Login() {
+  const [{}, dispatch] = useDataLayerValue();
   const [signup, setSignup] = useState(false);
   const [userObj, setUserObj] = useState({});
 
   const handleSignInLogin = () => {
     setSignup(!signup);
     setUserObj({});
+  };
+
+  const handleSignUp = (e) => {
+    e.preventDefault();
+    auth
+      .createUserWithEmailAndPassword(userObj.email, userObj.password)
+      .then((res) => {
+        console.log({ res });
+        dispatch({
+          type: "SET_USER",
+          user: {
+            email: res.email,
+            uid: res.uid,
+          },
+        });
+      })
+      .catch((err) => {
+        const { code, message } = err;
+        console.error({ code, message });
+      });
   };
 
   return (
@@ -75,7 +99,9 @@ function Login() {
                     />
                   </div>
                   <div className="form-group flex-end">
-                    <button className="button">SIGNUP</button>
+                    <button className="button" onClick={handleSignUp}>
+                      SIGNUP
+                    </button>
                   </div>
                   <MDBAnimation type="fadeInUp" delay="1s">
                     <div className="new-user">

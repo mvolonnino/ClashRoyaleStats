@@ -1,7 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:ital@1&display=swap");
 
 body {
-  font-family: montserrat, sans-serif;
+  font-family: montserrat, sans-serif !important;
 }
 
 .container-fluid {
@@ -29,11 +29,12 @@ body {
 .col-md-4 {
   padding: 0 !important;
 }
+
 .login-wrap {
   display: flex;
   /* height: 100vh; */
   overflow-x: hidden;
-  overflow-y: hidden;
+  overflow-y: scroll;
 }
 
 .left-panel {
@@ -143,8 +144,6 @@ body {
   );
   background-size: 200%; */
   transition: transform 300ms ease-in-out;
-  /* transition: color 300ms ease-in-out;
-  transition: background-color 300ms ease-in-out; */
 }
 
 .animated-form .form-group .button:hover {
@@ -152,6 +151,10 @@ body {
   background-color: var(--clash-main);
   color: white;
   transform: scale(1.1);
+}
+
+.animated-form .form-group .button:focus {
+  outline: none;
 }
 
 .image {
